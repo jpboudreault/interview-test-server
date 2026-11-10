@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Income Tax 101</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700;900&family=Geist:wght@900&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  #stage { position: absolute; top: 50%; left: 50%; width: 1920px; height: 1080px; transform-origin: center; }
+  section { position: absolute; inset: 0; box-sizing: border-box; opacity: 0; pointer-events: none; transition: opacity .3s; }
+  section.on { opacity: 1; pointer-events: auto; }
+  section * { margin: 0; box-sizing: border-box; }
+  section ul { padding-left: 1.2em; }
+  section table { border-collapse: collapse; }
+  section th { text-align: left; font-weight: 700; padding: 0 0 16px; border-bottom: 2px solid currentColor; }
+  section td { padding: 18px 0; border-bottom: 1px solid #e6e6e6; }
+  section p[style*="monospace"] { white-space: pre-wrap; }
+  #brackets div > div tr:last-child td { font-weight: 700; border-bottom: 0; }
+  #nav { position: fixed; bottom: 12px; right: 16px; font: 13px Figtree, sans-serif; color: #888; }
+</style>
+</head>
+<body>
+<div id="stage">
+<section id="cover" data-transition="fade" style="background:#000000;color:#ffffff;font-family:'Figtree', sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<p style="font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:0.12em;color:#5b8cff">Tax Calculator · Dev primer</p>
+<h1 style="font-family:'Geist', sans-serif;font-size:140px;font-weight:900;line-height:1.05">Income tax 101</h1>
+<p style="font-size:36px;line-height:1.4;color:#d8d8d8;width:1200px">How brackets work, what the effective rate is, and how our services get each year’s rates.</p>
+
+</section>
+<section id="brackets" data-transition="fade" style="background:#ffffff">
+  <div id="p24af86d2e69dr0-cfbe35b9" style="position:absolute; top:128px; left:128px; width:1664px; height:229px; display:flex; flex-direction:column; gap:16px">
+    <p style="font-family:Figtree, sans-serif; font-size:24px; font-weight:900; letter-spacing:2.9px; text-transform:uppercase; color:#1b64ef">How income tax works</p>
+    <h2 style="font-family:Geist, sans-serif; font-size:72px; font-weight:900; line-height:1.1; color:#000000">Your income is taxed in slices</h2>
+    <p style="font-family:Figtree, sans-serif; font-size:30px; line-height:1.4; color:#686868">Progressive by design: the more you earn, the higher the rate on the top slice, so higher incomes carry more of the cost of public services.</p>
+  </div>
+  <div id="p24af86d2e69dr1-cfbe35b9" style="position:absolute; top:405px; left:128px; width:1664px; height:416px; display:flex; flex-direction:row; gap:64px">
+    <table style="width:800px; font-family:Figtree, sans-serif; font-size:32px; color:#000000">
+      <tr><th style="width:65%">Sample bands</th><th style="width:35%; text-align:right">Rate</th></tr>
+      <tr><td>$0 – 50,000</td><td style="text-align:right">15%</td></tr>
+      <tr><td>$50,000 – 100,000</td><td style="text-align:right">20%</td></tr>
+      <tr><td>$100,000 – 150,000</td><td style="text-align:right">25%</td></tr>
+      <tr><td>$150,000 and up</td><td style="text-align:right">30%</td></tr>
+    </table>
+    <div style="display:flex; flex-direction:column; flex:1">
+      <table style="font-family:Figtree, sans-serif; font-size:32px; color:#000000">
+        <tr><th style="width:55%">Slice of $120,000</th><th style="width:45%; text-align:right">Tax</th></tr>
+        <tr><td>$50,000 × 15%</td><td style="text-align:right">$7,500</td></tr>
+        <tr><td>$50,000 × 20%</td><td style="text-align:right">$10,000</td></tr>
+        <tr><td>$20,000 × 25%</td><td style="text-align:right">$5,000</td></tr>
+        <tr style="background:#f3f3f3"><td style="color:#686868">$0 × 30%</td><td style="text-align:right; color:#686868">$0</td></tr>
+        <tr><td>Total</td><td style="text-align:right; color:#1b64ef">$22,500</td></tr>
+      </table>
+    </div>
+  </div>
+  
+</section>
+<section id="effective" data-transition="fade" style="background:#000000;color:#ffffff;font-family:'Figtree', sans-serif;padding:128px;display:flex;flex-direction:column;gap:64px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:0.12em;color:#5b8cff">Effective tax rate</p>
+<h2 style="font-family:'Geist', sans-serif;font-size:72px;font-weight:900;line-height:1.1">Total tax ÷ income</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#1b1b1b;padding:48px;border-radius:30px;border:1px solid #333333">
+<p style="font-size:28px;color:#d8d8d8">$50,000 → $7,500 tax</p>
+<p style="font-family:'Geist', sans-serif;font-size:120px;font-weight:900;line-height:1">15%</p>
+<p style="font-size:28px;color:#8a8a8a">Top band 15%</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#1b64ef;padding:48px;border-radius:30px">
+<p style="font-size:28px;color:#ffffff">$120,000 → $22,500 tax</p>
+<p style="font-family:'Geist', sans-serif;font-size:120px;font-weight:900;line-height:1">18.75%</p>
+<p style="font-size:28px;color:#ffffff">Top band 25%</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#1b1b1b;padding:48px;border-radius:30px;border:1px solid #333333">
+<p style="font-size:28px;color:#d8d8d8">$200,000 → $45,000 tax</p>
+<p style="font-family:'Geist', sans-serif;font-size:120px;font-weight:900;line-height:1">22.5%</p>
+<p style="font-size:28px;color:#8a8a8a">Top band 30%</p>
+</div>
+</div>
+<p style="font-size:32px;color:#d8d8d8">The effective rate is always at or below the top band: the lower bands pull it down.</p>
+
+</section>
+<section id="real2022" data-transition="fade" style="background:#ffffff;color:#000000;font-family:'Figtree', sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:0.12em;color:#1b64ef">Real rates</p>
+<h2 style="font-family:'Geist', sans-serif;font-size:72px;font-weight:900;line-height:1.1">2022 tax brackets</h2>
+<p style="font-size:30px;line-height:1.4;color:#686868">Governments change rates every few years, so never hard-code them: always fetch the brackets for the year.</p>
+</div>
+<div style="display:flex;gap:64px">
+<div style="flex:1.2;display:flex;flex-direction:column">
+<table style="font-family:'Figtree', sans-serif;font-size:32px;color:#000000">
+<tr><th style="width:70%">Band</th><th style="width:30%;text-align:right">Rate</th></tr>
+<tr><td>$0 – 50,197</td><td style="text-align:right">15%</td></tr>
+<tr><td>$50,197 – 100,392</td><td style="text-align:right">20.5%</td></tr>
+<tr><td>$100,392 – 155,625</td><td style="text-align:right">26%</td></tr>
+<tr><td>$155,625 – 221,708</td><td style="text-align:right">29%</td></tr>
+<tr><td>$221,708 and up</td><td style="text-align:right">33%</td></tr>
+</table>
+</div>
+<div style="flex:1;display:flex;flex-direction:column">
+<table style="font-family:'Figtree', sans-serif;font-size:32px;color:#000000">
+<tr><th style="width:50%">Income</th><th style="width:50%;text-align:right">Total tax</th></tr>
+<tr><td>$0</td><td style="text-align:right">$0</td></tr>
+<tr><td>$50,000</td><td style="text-align:right">$7,500.00</td></tr>
+<tr><td>$100,000</td><td style="text-align:right">$17,739.17</td></tr>
+<tr><td>$1,234,567</td><td style="text-align:right">$385,587.65</td></tr>
+</table>
+</div>
+</div>
+
+</section>
+<section id="fetching" data-transition="fade" style="background:#000000;color:#ffffff;font-family:'Figtree', sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:0.12em;color:#5b8cff">What to build</p>
+<h2 style="font-family:'Geist', sans-serif;font-size:72px;font-weight:900;line-height:1.1">A Python endpoint: year + income in, tax out</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#1b1b1b;padding:40px;border-radius:30px;border:1px solid #333333">
+<p style="font-size:28px;font-weight:700;color:#5b8cff">Endpoint inputs</p>
+<ul style="font-size:32px;line-height:1.6;color:#ffffff"><li><b>income</b>: annual income, e.g. 100000</li><li><b>tax_year</b>: e.g. 2022</li></ul>
+</div>
+<div style="flex:1.4;display:flex;flex-direction:column;gap:20px;background:#1b1b1b;padding:40px;border-radius:30px;border:1px solid #333333">
+<p style="font-size:28px;font-weight:700;color:#5b8cff">Output</p>
+<p style="font-family:monospace;font-size:28px;line-height:1.5;color:#ffffff">{<br>  "total_tax": "17739.17",<br>  "effective_rate": "0.1774",<br>  "bands": [ { "rate": "0.15", "tax": "7529.55" }, … ]<br>}</p>
+</div>
+</div>
+<p style="font-size:30px;color:#d8d8d8">Your Python endpoint must get the tax rates from the reference service.</p>
+</section>
+<section id="server" data-transition="fade" style="background:#ffffff;color:#000000;font-family:'Figtree', sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:900;text-transform:uppercase;letter-spacing:0.12em;color:#1b64ef">Reference service</p>
+<h2 style="font-family:'Geist', sans-serif;font-size:72px;font-weight:900;line-height:1.1">Tax brackets by year, and it’s unstable</h2>
+</div>
+<div style="display:flex;gap:48px">
+<div style="flex:1.2;display:flex;flex-direction:column;gap:24px;background:#f3f3f3;padding:48px;border-radius:30px">
+<p style="font-size:30px;font-weight:700">GET https://{app-name}.fly.dev<br>/tax-calculator/tax-year/{year}</p>
+<p style="font-size:24px;color:#686868">The app name is provided during the call.</p>
+<p style="font-family:monospace;font-size:26px;line-height:1.5;color:#0b0b0b">{ "tax_brackets": [<br>  { "min": 0, "max": 50197, "rate": 0.15 },<br>  { "min": 50197, "max": 100392, "rate": 0.205 },<br>  …<br>  { "min": 221708, "rate": 0.33 } ] }</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:32px;justify-content:center">
+<div style="display:flex;gap:24px;align-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#d93a08;width:56px;height:56px;flex:none"><path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5M12 18h.01"/></svg><p style="font-size:32px"><b>1 in 4</b> calls fail with a 500</p></div>
+<div style="display:flex;gap:24px;align-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#d93a08;width:56px;height:56px;flex:none"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><p style="font-size:32px"><b>0–5 s</b> before it answers</p></div>
+<div style="display:flex;gap:24px;align-items:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#1b64ef;width:56px;height:56px;flex:none"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><p style="font-size:32px"><b>404</b> for an unsupported year</p></div>
+</div>
+</div>
+
+</section>
+</div>
+<div id="nav"></div>
+<script>
+  const slides = [...document.querySelectorAll("section")];
+  const stage = document.getElementById("stage");
+  const nav = document.getElementById("nav");
+  let i = Math.min(Math.max(parseInt(location.hash.slice(1)) - 1 || 0, 0), slides.length - 1);
+  function show(n) {
+    i = Math.min(Math.max(n, 0), slides.length - 1);
+    slides.forEach((s, k) => s.classList.toggle("on", k === i));
+    nav.textContent = (i + 1) + " / " + slides.length;
+    history.replaceState(null, "", "#" + (i + 1));
+  }
+  function fit() {
+    const k = Math.min(innerWidth / 1920, innerHeight / 1080);
+    stage.style.transform = `translate(-50%, -50%) scale(${k})`;
+  }
+  addEventListener("keydown", e => {
+    if (["ArrowRight", "ArrowDown", "PageDown", " "].includes(e.key)) show(i + 1);
+    if (["ArrowLeft", "ArrowUp", "PageUp"].includes(e.key)) show(i - 1);
+  });
+  addEventListener("click", e => show(e.clientX > innerWidth / 2 ? i + 1 : i - 1));
+  addEventListener("resize", fit);
+  fit(); show(i);
+</script>
+</body>
+</html>
