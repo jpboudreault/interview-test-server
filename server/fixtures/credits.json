@@ -1,0 +1,87 @@
+{
+  "2019": {
+    "deductions": [
+      {
+        "code": "RRSP",
+        "description": "Retirement savings contribution, subtracted from income before the brackets",
+        "max_amount": 26500
+      }
+    ],
+    "credits": [
+      {
+        "code": "BASIC_PERSONAL",
+        "description": "Basic personal credit, subtracted from the tax (the tax can't go below 0)",
+        "amount": 1810.35,
+        "refundable": false
+      }
+    ]
+  },
+  "2020": {
+    "deductions": [
+      {
+        "code": "RRSP",
+        "description": "Retirement savings contribution, subtracted from income before the brackets",
+        "max_amount": 27230
+      }
+    ],
+    "credits": [
+      {
+        "code": "BASIC_PERSONAL",
+        "description": "Basic personal credit, subtracted from the tax (the tax can't go below 0)",
+        "amount": 1984.35,
+        "refundable": false
+      }
+    ]
+  },
+  "2021": {
+    "deductions": [
+      {
+        "code": "RRSP",
+        "description": "Retirement savings contribution, subtracted from income before the brackets",
+        "max_amount": 27830
+      }
+    ],
+    "credits": [
+      {
+        "code": "BASIC_PERSONAL",
+        "description": "Basic personal credit, subtracted from the tax (the tax can't go below 0)",
+        "amount": 2071.2,
+        "refundable": false
+      }
+    ]
+  },
+  "2022": {
+    "deductions": [
+      {
+        "code": "RRSP",
+        "description": "Retirement savings contribution, subtracted from income before the brackets",
+        "max_amount": 29210
+      }
+    ],
+    "credits": [
+      {
+        "code": "BASIC_PERSONAL",
+        "description": "Basic personal credit, subtracted from the tax (the tax can't go below 0)",
+        "amount": 2159.7,
+        "refundable": false
+      }
+    ]
+  },
+  "2023": {
+    "deductions": [
+      {
+        "code": "RRSP",
+        "description": "Retirement savings contribution, subtracted from income before the brackets",
+        "max_amount": 30780
+      }
+    ],
+    "credits": [
+      {
+        "code": "BASIC_PERSONAL",
+        "description": "Basic personal credit, subtracted from the tax (the tax can't go below 0)",
+        "amount": 2250.0,
+        "refundable": false
+      }
+    ]
+  }
+}

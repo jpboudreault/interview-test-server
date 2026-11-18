@@ -6,4 +6,4 @@ COPY app.py .
 COPY fixtures fixtures
 COPY static static
 EXPOSE 5001
-CMD ["gunicorn", "app:app", "-w", "2", "--threads", "8", "-b", ":5001"]
+CMD ["gunicorn", "app:app", "-w", "1", "--threads", "16", "-b", ":5001"]
