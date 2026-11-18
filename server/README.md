@@ -4,6 +4,7 @@ The tax brackets API candidates call, deployed on Fly at `https://{app-name}.fly
 
 - `/` landing page for candidates
 - `/deck` the assignment brief
+- `/starter.zip` the optional starter. Rebuild it with `./build_starter_zip.sh` after committing changes to `starter/`; a test fails if it's out of date.
 - `/docs` OpenAPI docs for the baseline endpoint (spec at `/openapi.json`)
 - `GET /tax-calculator/tax-year/{year}` brackets for 2019 to 2023. It waits 0 to 5 s, fails 1 call in 4 with a 500, and returns a 404 for other years.
 

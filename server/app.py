@@ -97,6 +97,18 @@ def deck():
     return send_from_directory(STATIC, "deck.html")
 
 
+CORRELATION_PARAM = {"$ref": "#/components/parameters/CorrelationId"}
+
+
+def without_correlation_id(node):
+    if isinstance(node, dict):
+        cleaned = {k: without_correlation_id(v) for k, v in node.items() if k != "X-Correlation-ID"}
+        return {k: v for k, v in cleaned.items() if not (k == "headers" and v == {})}
+    if isinstance(node, list):
+        return [without_correlation_id(v) for v in node if v != CORRELATION_PARAM]
+    return node
+
+
 def load_spec():
     return json.loads((STATIC / "openapi.json").read_text())
 
@@ -107,13 +119,20 @@ def docs():
     return send_from_directory(STATIC, "docs.html")
 
 
+@app.get("/starter.zip")
+def starter_zip():
+    return send_from_directory(STATIC, "starter.zip", as_attachment=True)
+
+
 @app.get("/openapi.json")
 def openapi_public():
     spec = load_spec()
     spec["paths"] = {p: v for p, v in spec["paths"].items() if p in PUBLIC_PATHS}
     # Swagger UI shows an "Authorize" button whenever a security scheme is declared.
     spec["components"].pop("securitySchemes", None)
-    return jsonify(spec)
+    spec["components"]["parameters"].pop("CorrelationId", None)
+    spec["components"].pop("headers", None)
+    return jsonify(without_correlation_id(spec))
 
 
 @app.get("/openapi-full.json")

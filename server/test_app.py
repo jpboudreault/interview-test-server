@@ -1,3 +1,8 @@
+import json
+import subprocess
+import zipfile
+from pathlib import Path
+
 import pytest
 
 import app as server
@@ -145,9 +150,27 @@ def test_public_spec_has_baseline_only(client):
     spec = client.get("/openapi.json").json
     assert set(spec["paths"]) == {"/tax-calculator/tax-year/{tax_year}"}
     assert "securitySchemes" not in spec["components"]
+    assert "Correlation" not in json.dumps(spec)
 
 
 def test_docs_are_served(client):
     assert client.get("/docs").status_code == 200
     assert client.get("/docs/full").status_code == 200
     assert client.get("/docs/").status_code == 200
+
+
+def test_starter_zip_matches_tracked_starter_files(client):
+    repo = Path(server.ROOT).parent
+    try:
+        tracked = subprocess.run(
+            ["git", "-C", str(repo), "ls-files", "starter"], capture_output=True, text=True, check=True
+        ).stdout.split()
+    except (OSError, subprocess.CalledProcessError):
+        pytest.skip("needs a git checkout")
+    resp = client.get("/starter.zip")
+    assert resp.status_code == 200
+    with zipfile.ZipFile(server.STATIC / "starter.zip") as zf:
+        files = {n: zf.read(n) for n in zf.namelist() if not n.endswith("/")}
+    assert set(files) == set(tracked), "run ./build_starter_zip.sh"
+    for name, data in files.items():
+        assert data == (repo / name).read_bytes(), f"{name} changed, run ./build_starter_zip.sh"
