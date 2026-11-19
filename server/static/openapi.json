@@ -1,0 +1,236 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Tax Calculator API",
+    "version": "1.0.0",
+    "description": "Canadian federal income tax brackets, 2019 to 2023. Calls can be slow and can fail with a 500: retry them."
+  },
+  "paths": {
+    "/tax-calculator/tax-year/{tax_year}": {
+      "get": {
+        "summary": "Tax brackets for a year",
+        "parameters": [
+          { "$ref": "#/components/parameters/TaxYear" },
+          { "$ref": "#/components/parameters/CorrelationId" }
+        ],
+        "responses": {
+          "200": { "$ref": "#/components/responses/Brackets" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
+    },
+    "/tax-calculator/rate-limited/tax-year/{tax_year}": {
+      "get": {
+        "summary": "Tax brackets for a year, rate limited",
+        "description": "Allows 2 calls per 3 seconds per client.",
+        "parameters": [
+          { "$ref": "#/components/parameters/TaxYear" },
+          { "$ref": "#/components/parameters/CorrelationId" }
+        ],
+        "responses": {
+          "200": { "$ref": "#/components/responses/Brackets" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": {
+            "description": "Too many requests",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before calling again",
+                "schema": { "type": "integer", "minimum": 1, "maximum": 3 }
+              }
+            },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Errors" } } }
+          },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
+    },
+    "/tax-calculator/secure/tax-year/{tax_year}": {
+      "get": {
+        "summary": "Tax brackets for a year, API key required",
+        "security": [{ "ApiKey": [] }],
+        "parameters": [
+          { "$ref": "#/components/parameters/TaxYear" },
+          { "$ref": "#/components/parameters/CorrelationId" }
+        ],
+        "responses": {
+          "200": { "$ref": "#/components/responses/Brackets" },
+          "401": { "description": "Missing X-API-Key header", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Errors" } } } },
+          "403": { "description": "Invalid API key", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Errors" } } } },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "500": { "$ref": "#/components/responses/ServerError" },
+          "503": { "description": "No API key configured on the server", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Errors" } } } }
+        }
+      }
+    },
+    "/tax-calculator/v2/tax-year/{tax_year}": {
+      "get": {
+        "summary": "Tax brackets for a year, v2 shape",
+        "parameters": [
+          { "$ref": "#/components/parameters/TaxYear" },
+          { "$ref": "#/components/parameters/CorrelationId" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Brackets",
+            "headers": { "X-Correlation-ID": { "$ref": "#/components/headers/CorrelationId" } },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["tax_year", "brackets"],
+                  "properties": {
+                    "tax_year": { "type": "integer", "example": 2022 },
+                    "brackets": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["lower", "upper", "rate_percent"],
+                        "properties": {
+                          "lower": { "type": "number", "example": 0 },
+                          "upper": { "type": "number", "nullable": true, "description": "null on the top bracket", "example": 50197 },
+                          "rate_percent": { "type": "number", "example": 15.0 }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
+    },
+    "/tax-calculator/tax-year/{tax_year}/credits": {
+      "get": {
+        "summary": "Deductions and credits for a year",
+        "description": "Deductions are subtracted from income, up to max_amount, before the brackets apply. Credits are subtracted from the resulting tax; a non-refundable credit can't bring the tax below 0.",
+        "parameters": [
+          { "$ref": "#/components/parameters/TaxYear" },
+          { "$ref": "#/components/parameters/CorrelationId" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deductions and credits",
+            "headers": { "X-Correlation-ID": { "$ref": "#/components/headers/CorrelationId" } },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["deductions", "credits"],
+                  "properties": {
+                    "deductions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["code", "description", "max_amount"],
+                        "properties": {
+                          "code": { "type": "string", "example": "RRSP" },
+                          "description": { "type": "string" },
+                          "max_amount": { "type": "number", "example": 29210 }
+                        }
+                      }
+                    },
+                    "credits": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["code", "description", "amount", "refundable"],
+                        "properties": {
+                          "code": { "type": "string", "example": "BASIC_PERSONAL" },
+                          "description": { "type": "string" },
+                          "amount": { "type": "number", "example": 2159.7 },
+                          "refundable": { "type": "boolean", "example": false }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKey": { "type": "apiKey", "in": "header", "name": "X-API-Key" }
+    },
+    "parameters": {
+      "TaxYear": {
+        "name": "tax_year",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string", "example": "2022" },
+        "description": "2019 to 2023"
+      },
+      "CorrelationId": {
+        "name": "X-Correlation-ID",
+        "in": "header",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Echoed back on the response and written to the server logs"
+      }
+    },
+    "headers": {
+      "CorrelationId": { "description": "Echo of the request's X-Correlation-ID, when sent", "schema": { "type": "string" } }
+    },
+    "schemas": {
+      "Bracket": {
+        "type": "object",
+        "required": ["min", "rate"],
+        "properties": {
+          "min": { "type": "number", "example": 0 },
+          "max": { "type": "number", "description": "Absent on the top bracket", "example": 50197 },
+          "rate": { "type": "number", "example": 0.15 }
+        }
+      },
+      "Errors": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "field": { "type": "string" },
+                "code": { "type": "string", "example": "NOT_FOUND" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "Brackets": {
+        "description": "Brackets",
+        "headers": { "X-Correlation-ID": { "$ref": "#/components/headers/CorrelationId" } },
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": ["tax_brackets"],
+              "properties": {
+                "tax_brackets": { "type": "array", "items": { "$ref": "#/components/schemas/Bracket" } }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Unsupported year",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Errors" } } }
+      },
+      "ServerError": {
+        "description": "Random failure, retry the call",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Errors" } } }
+      }
+    }
+  }
+}
